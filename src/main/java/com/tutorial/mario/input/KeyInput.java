@@ -1,28 +1,23 @@
 package com.tutorial.mario.input;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import com.tutorial.mario.Game;
 import com.tutorial.mario.entity.Entity;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 public class KeyInput implements KeyListener {
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //keylistenerden override edşldiğinden metot burada yazılı olmak zorundu ama  gerekli olmadığından herhangi bir tuş ataması yapılmadı.
-    }
 
-
-    //Tuşa basılı tutuğunda yapılacak işlemin fonksiyonudur.
-    @Override
+    // Bir tuşa basıldığında tetiklenen metod
     public void keyPressed(KeyEvent e) {
-        int key=e.getKeyCode();
-        for (Entity en: Game.handler.entity){
-            switch (key){
-                case KeyEvent.VK_W :
-                    if(!en.jumping) {
-                        en.jumping=true;
-                        en.gravtiy=10.0;
+        int key = e.getKeyCode();
+
+        // Oyuncu hareketlerini kontrol etme
+        for (Entity en : Game.handler.entity) {
+            switch (key) {
+                case KeyEvent.VK_W:
+                    if (!en.jumping) {
+                        en.jumping = true;
+                        en.gravity = 10.0;
                     }
                     break;
                 case KeyEvent.VK_A:
@@ -33,21 +28,19 @@ public class KeyInput implements KeyListener {
                     break;
             }
         }
-
-
-
     }
-//Tuşa bıraktığımızda yapılacak işlemin fonksiyonudur.
 
-    @Override
+    // Bir tuş bırakıldığında tetiklenen metod
     public void keyReleased(KeyEvent e) {
-        int key=e.getKeyCode();
-        for (Entity en: Game.handler.entity){
-            switch (key){
-                case KeyEvent.VK_W :
+        int key = e.getKeyCode();
+
+        // Oyuncu hareketlerini kontrol etme
+        for (Entity en : Game.handler.entity) {
+            switch (key) {
+                case KeyEvent.VK_W:
                     en.setVelY(0);
                     break;
-                case KeyEvent.VK_S :
+                case KeyEvent.VK_S:
                     en.setVelY(0);
                     break;
                 case KeyEvent.VK_A:
@@ -58,6 +51,10 @@ public class KeyInput implements KeyListener {
                     break;
             }
         }
+    }
 
+    // Tuşa basılı tutulduğunda tetiklenen metod (kullanılmıyor)
+    public void keyTyped(KeyEvent e) {
+        // kullanılmıyor
     }
 }
