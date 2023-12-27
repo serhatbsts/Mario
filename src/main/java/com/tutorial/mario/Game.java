@@ -1,14 +1,16 @@
 package com.tutorial.mario;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import com.tutorial.mario.entity.Player;
+
+import com.tutorial.mario.entity.Entity;
+import com.tutorial.mario.gfx.Sprite;
+import com.tutorial.mario.gfx.SpriteSheet;
 import com.tutorial.mario.input.KeyInput;
-import com.tutorial.mario.tile.Wall;
 
 public class Game extends Canvas implements Runnable {
 
@@ -18,7 +20,15 @@ public class Game extends Canvas implements Runnable {
     public static String TITLE = "Mario";
     private Thread thread;
     private boolean running = false;
+    private BufferedImage image;
     public static Handler handler;
+    public static SpriteSheet sheet;
+    public static Camera cam;
+    public static Sprite grass;//çim grafiği
+    public static Sprite player[]=new Sprite[10];//oyuncu grafiği
+    public static Sprite mushroom;//mantar grafiği
+    public static Sprite[] goomba;
+
 
     // Main metodu, ana pencereyi oluşturur
     public static void main(String[] args) {
@@ -44,11 +54,35 @@ public class Game extends Canvas implements Runnable {
 
     private void init() {
         handler = new Handler();
+        sheet = new SpriteSheet("/spritesheet.png");//resim dosyalarını eklemek için yapıldı
+        cam = new Camera();
 
         addKeyListener(new KeyInput());
+        grass = new Sprite(sheet,2,1);//çim ile ilgili kordinatlar
+      //  player = new Sprite(sheet,2,2);//oyuncu ile ilgili kordinatlar  dizi olarak tanımlanmaz ise
+        player = new Sprite[8];
+        mushroom = new Sprite(sheet,1,1);
+        goomba=new Sprite[8];
+
+        //oyuncu ile ilgili kordinatlar  dizi olarak tanımlanır ise
+        for (int i=0;i< player.length; i++){
+            player[i]=new Sprite(sheet,i+1,16);
+        }
+        for (int i=0;i< goomba.length; i++){
+            goomba[i]=new Sprite(sheet,i+1,15);
+        }
 
         // Ekran üzerine bir oyuncu ekler
-        handler.addEntity(new Player(300, 512, 64, 64, true, Id.player, handler));
+       // handler.addEntity(new Player(300, 512, 64, 64, true, Id.player, handler));
+
+        //levellerin olduğu yere atanır grafikler eklendiğinde sorun kalmayacaktır
+        try {
+            image= ImageIO.read(getClass().getResource("/level.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        handler.createLevel(image);
     }
 
     // Oyunu başlatmak için kullanılan metot
@@ -101,6 +135,7 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
+
     // Ekran üzerine çizim yapmak için kullanılan metot
     public void render() {
         BufferStrategy bs = getBufferStrategy();
@@ -111,13 +146,30 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0 , getWidth(), getHeight());
+        g.translate(cam.getX(),cam.getY());
         handler.render(g);
         g.dispose();
         bs.show();
     }
 
+    public int getFrameWidht(){
+        return WIDTH*SCALE;
+    }
+
+    public int getFrameHeight(){
+        return HEIGHT*SCALE;
+    }
+
     // Oyunun güncellenmesi için kullanılan metot
     public void tick() {
         handler.tick();
+
+        for (Entity e: handler.entity){
+            if (e.getId()==Id.player){
+                cam.tick(e);
+            }
+        }
     }
+
+
 }

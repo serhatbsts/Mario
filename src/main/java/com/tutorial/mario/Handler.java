@@ -1,8 +1,12 @@
 package com.tutorial.mario;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import com.tutorial.mario.entity.Entity;
+import com.tutorial.mario.entity.mob.Goomba;
+import com.tutorial.mario.entity.mob.Player;
+import com.tutorial.mario.entity.powerup.Mushroom;
 import com.tutorial.mario.tile.Tile;
 import com.tutorial.mario.tile.Wall;
 
@@ -12,7 +16,7 @@ public class Handler {
     public LinkedList<Tile> tile = new LinkedList<Tile>();
 
     public Handler() {
-        createLevel();
+      //  createLevel();
     }
 
     // Grafikleri render etme metodu
@@ -62,12 +66,24 @@ public class Handler {
     }
 
     // Seviye oluşturma metodu
-    public void createLevel() {
-        for(int i=0; i<Game.WIDTH*Game.SCALE/64+1; i++){
-            addTile(new Wall(i*64, Game.HEIGHT*Game.SCALE-64, 64, 64, true, Id.wall, this));
-            if(i != 0 && i != 1 && i != 15 && i != 16 && i != 17) {
-                addTile(new Wall(i*57, 300, 64, 64, true, Id.wall, this));
+    public void createLevel(BufferedImage level) {
+        int width = level.getWidth();
+        int height = level.getHeight();
+
+        for (int y=0;y<height;y++){
+            for (int x=0;x<width;x++){
+                int pixel = level.getRGB(x,y);
+
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+
+                if (red==0&&green==0&&blue==0) addTile(new Wall(x*64,y*64,64,64,true,Id.wall,this));
+                if (red==0&&green==0&&blue==255) addEntity(new Player(x*64,y*64,64,64,false,Id.player,this));
+                if (red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64,true,Id.mushroom,this));
+                if (red==255&&green==119&&blue==0) addEntity(new Goomba(x*64,y*64,64,64,true,Id.goomba,this));
             }
         }
+
     }
 }

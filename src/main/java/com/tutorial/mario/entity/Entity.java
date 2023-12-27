@@ -9,6 +9,7 @@ public abstract class Entity {
     // Değişkenlerin tanımlanması
     public int x, y;
     public int width, height;
+    public int facing=0;//genel arayüz  0-sol ,1- sağ
     public int velX, velY;
     public double gravity = 0.0;
     public boolean solid;
