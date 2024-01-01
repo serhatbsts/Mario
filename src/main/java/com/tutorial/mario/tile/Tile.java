@@ -11,9 +11,11 @@ public abstract class Tile {
     // Değişkenlerin tanımlanması
     public int x, y;
     public int width, height;
-    public boolean solid;
+    public boolean solid = false;
+    public boolean activated = false;
 
     public int velX, velY;
+    public int facing;
 
     public Id id;
 

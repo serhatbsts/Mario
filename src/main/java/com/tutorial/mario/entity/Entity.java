@@ -2,19 +2,28 @@ package com.tutorial.mario.entity;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import com.tutorial.mario.Game;
 import com.tutorial.mario.Handler;
 import com.tutorial.mario.Id;
+import com.tutorial.mario.states.BossState;
 
 public abstract class Entity {
     // Değişkenlerin tanımlanması
     public int x, y;
     public int width, height;
     public int facing=0;//genel arayüz  0-sol ,1- sağ
+    public int hp;
+    public int phaseTime;
+    public int type;
     public int velX, velY;
     public double gravity = 0.0;
     public boolean jumping = false;
     public boolean falling = true;
+    public boolean goingDownPipe = false;
+    public boolean attackable = false;
     public Id id;
+    public BossState bossState;
     public Handler handler;
     public int frame=0;
     public int frameDelay=0;
@@ -41,6 +50,9 @@ public abstract class Entity {
 
     public int getY() {
         return y;
+    }
+    public int getType(){
+        return type;
     }
 
     public void setY(int y) {
@@ -88,5 +100,11 @@ public abstract class Entity {
     // Ölme metodu
     public void die() {
         handler.removeEntity(this); // this, çünkü tüm sınıfa referans verir
+        if (getId()==Id.player) {
+            Game.lives--;
+            Game.showDeatScreen = true;
+            if (Game.lives<=0) Game.gameOver = true;
+        }
+
     }
 }

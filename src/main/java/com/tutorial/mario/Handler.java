@@ -3,12 +3,14 @@ package com.tutorial.mario;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+
+import com.tutorial.mario.entity.Coin;
 import com.tutorial.mario.entity.Entity;
 import com.tutorial.mario.entity.mob.Goomba;
 import com.tutorial.mario.entity.mob.Player;
+import com.tutorial.mario.entity.mob.TowerBoss;
 import com.tutorial.mario.entity.powerup.Mushroom;
-import com.tutorial.mario.tile.Tile;
-import com.tutorial.mario.tile.Wall;
+import com.tutorial.mario.tile.*;
 
 // Entiteleri kontrol etme sınıfı
 public class Handler {
@@ -79,11 +81,18 @@ public class Handler {
                 int blue = (pixel) & 0xff;
 
                 if (red==0&&green==0&&blue==0) addTile(new Wall(x*64,y*64,64,64,true,Id.wall,this));
-                if (red==0&&green==0&&blue==255) addEntity(new Player(x*64,y*64,64,64,Id.player,this));
-                if (red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64,Id.mushroom,this));
+                if (red==0&&green==0&&blue==255) addEntity(new Player(x*64,y*64,48,48,Id.player,this));
                 if (red==255&&green==119&&blue==0) addEntity(new Goomba(x*64,y*64,64,64,Id.goomba,this));
+                if (red==255&&green==255&&blue==0) addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.lifeMushroom,1));//blue nın yanında sade 1 tane & işareti koyulabilir
+                if (red==0&&(green>123&&green<129)&&blue==0) addTile(new Pipe(x*64,y*64,64,64*15,true,Id.pipe,this,128-green));
+                if (red==255&&green==255&&blue==0) addEntity(new Coin(x*64,y*64,64,64,Id.coin,this));
+                if (red==255&&green==0&&blue==255) addEntity(new TowerBoss(x*64,y*64,64,64,Id.towerBoss,this,3));//hp değerini tekrar gözden geçir
             }
         }
-
     }
+    public void clearLevel() {
+        entity.clear();
+        tile.clear();
+    }
+
 }

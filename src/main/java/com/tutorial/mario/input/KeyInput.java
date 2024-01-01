@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import com.tutorial.mario.Game;
 import com.tutorial.mario.Id;
 import com.tutorial.mario.entity.Entity;
+import com.tutorial.mario.tile.Tile;
 
 public class KeyInput implements KeyListener {
 
@@ -15,11 +16,32 @@ public class KeyInput implements KeyListener {
         // Oyuncu hareketlerini kontrol etme
         for (Entity en : Game.handler.entity) {
             if (en.getId()== Id.player){
+                if (en.goingDownPipe) return;
                 switch (key) {
                     case KeyEvent.VK_W:
+                        for (int j=0;j<Game.handler.tile.size();j++) {
+                            Tile t = Game.handler.tile.get(j);
+                            if (t.getId()==Id.pipe) {
+                                if (en.getBoundsTop().intersects(t.getBounds())){
+                                    if (!en.goingDownPipe) en.goingDownPipe =true;
+                                }
+
+                            }
+                        }
                         if (!en.jumping) {
                             en.jumping = true;
                             en.gravity = 10.0;
+                        }
+                        break;
+                    case KeyEvent.VK_S:
+                        for (int j=0;j<Game.handler.tile.size();j++) {
+                            Tile t = Game.handler.tile.get(j);
+                            if (t.getId()==Id.pipe) {
+                                if (en.getBoundsBottom().intersects(t.getBounds())){
+                                    if (!en.goingDownPipe) en.goingDownPipe =true;
+                                }
+
+                            }
                         }
                         break;
                     case KeyEvent.VK_A:
@@ -29,6 +51,9 @@ public class KeyInput implements KeyListener {
                     case KeyEvent.VK_D:
                         en.setVelX(5);
                         en.facing=1;//oyuncunun yönünü gittiği yöne doğru çevirir.
+                        break;
+                    case KeyEvent.VK_Q://deneme amaçlı yapılmıştır
+                        en.die();
                         break;
                 }
             }
