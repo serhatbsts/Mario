@@ -7,17 +7,34 @@ import com.tutorial.mario.entity.Entity;
 import com.tutorial.mario.tile.Tile;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Goomba extends Entity {
-    public Goomba(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+
+    private Random random = new Random();
+
+    public Goomba(int x, int y, int width, int height, Id id, Handler handler) {
+        super(x, y, width, height, id, handler);
+
+        int dir = random.nextInt(2);
+
+        switch (dir){
+            case 0:
+                setVelX(-2);
+                facing = 0;
+                break;
+            case 1:
+                setVelX(2);
+                facing = 1;
+                break;
+        }
     }
 
     public void render(Graphics g) {
         if (facing==0){
-            g.drawImage(Game.goomba[frame+5].getBufferedImage(), x,y,width,height,null);
+            g.drawImage(Game.goomba[frame+5].getBufferedImage(), x,y,width,height,null);// frame ekle clasa
         }else if (facing==1){
-            g.drawImage(Game.goomba[frame].getBufferedImage(), x,y,width,height,null);
+            g.drawImage(Game.goomba[frame].getBufferedImage(), x,y,width,height,null);// frame ekle clasa
         }
 
     }
@@ -40,10 +57,12 @@ public class Goomba extends Entity {
 
                 if (getBoundsLeft().intersects(t.getBounds())) {
                     setVelX(2);
+                    facing=1;
                 }
 
                 if (getBoundsRight().intersects(t.getBounds())) {
                     setVelX(-2);
+                    facing=0;
                 }
             }
         }

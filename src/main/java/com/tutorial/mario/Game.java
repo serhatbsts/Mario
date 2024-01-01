@@ -68,6 +68,7 @@ public class Game extends Canvas implements Runnable {
         for (int i=0;i< player.length; i++){
             player[i]=new Sprite(sheet,i+1,16);
         }
+        //canavar ile ilgili kordinatlar dizi olarak tanımlanır ise
         for (int i=0;i< goomba.length; i++){
             goomba[i]=new Sprite(sheet,i+1,15);
         }

@@ -11,13 +11,11 @@ import com.tutorial.mario.tile.Tile;
 
 public class Player extends Entity {
 
-    private int frame=0;
-    private int frameDelay=0;
-    private boolean animate=false;
 
 
-    public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+
+    public Player(int x, int y, int width, int height, Id id, Handler handler) {
+        super(x, y, width, height, id, handler);
     }
 
     // Grafik çizme metodu
@@ -106,7 +104,9 @@ public class Player extends Entity {
                     e.die();
                 }
             }else if(e.getId()==getId().goomba){
-                if (getBounds().intersects(e.getBounds())){
+                if(getBoundsBottom().intersects(e.getBoundsTop())){
+                    e.die();
+                } else if (getBounds().intersects(e.getBounds())){
                     die();
                 }
             }
