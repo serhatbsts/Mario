@@ -47,12 +47,12 @@ public class Game extends Canvas implements Runnable {
     public static Sprite coin;
     public static Sprite star;
 
-    public static Sprite fireBall;
-    public static Sprite flower;
+  //  public static Sprite fireBall;
+   // public static Sprite flower;
     public static Sprite[] player;//oyuncu grafiği
 
     public static Sprite[] goomba;
-    public static Sprite[] firePlayer;//
+//    public static Sprite[] firePlayer;//
     public static Sprite[] flag;
     public static Sprite[] particle;
 
@@ -108,7 +108,7 @@ public class Game extends Canvas implements Runnable {
         goomba=new Sprite[8];
         flag=new Sprite[3];
         particle = new Sprite[6];
-        firePlayer = new Sprite[8];
+      //  firePlayer = new Sprite[8];
 
         levels = new BufferedImage[2];
 
@@ -129,9 +129,10 @@ public class Game extends Canvas implements Runnable {
             particle[i] = new Sprite(sheet,i+1,14);
         }
 
-        for (int i=0;i<firePlayer.length;i++){
+      /*  for (int i=0;i<firePlayer.length;i++){
             firePlayer[i] = new Sprite(sheet,i+8,16);
         }
+        */
 
         // Ekran üzerine bir oyuncu ekler
        // handler.addEntity(new Player(300, 512, 64, 64, true, Id.player, handler));
