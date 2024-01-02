@@ -22,7 +22,10 @@ public class Game extends Canvas implements Runnable {
     public static String TITLE = "Mario";
     private Thread thread;
     private boolean running = false;
-    private BufferedImage image;
+    private static BufferedImage[] levels;
+    private static BufferedImage backGround;
+    private static int playerX,playerY;
+    private static int level = 0;
     public static int coins = 0;
     public static int lives = 5;
     public static int deathScreenTime = 0;
@@ -42,9 +45,22 @@ public class Game extends Canvas implements Runnable {
     public static Sprite mushroom;//mantar grafiği
     public static Sprite lifeMushroom;
     public static Sprite coin;
-    public static Sprite player[];//oyuncu grafiği
+    public static Sprite star;
+
+    public static Sprite fireBall;
+    public static Sprite flower;
+    public static Sprite[] player;//oyuncu grafiği
 
     public static Sprite[] goomba;
+    public static Sprite[] firePlayer;//
+    public static Sprite[] flag;
+    public static Sprite[] particle;
+
+    public static Sound jump;
+    public static Sound goombastomp;
+    public static Sound levelcomplete;
+    public static Sound losealife;
+    public static Sound themesong;
 
 
     // Main metodu, ana pencereyi oluşturur
@@ -87,8 +103,14 @@ public class Game extends Canvas implements Runnable {
         mushroom = new Sprite(sheet,1,1);
         lifeMushroom = new Sprite(sheet,6,1);
         coin = new Sprite(sheet,5,1);
+        star = new Sprite(sheet,7,1);
         player = new Sprite[8];
         goomba=new Sprite[8];
+        flag=new Sprite[3];
+        particle = new Sprite[6];
+        firePlayer = new Sprite[8];
+
+        levels = new BufferedImage[2];
 
         //oyuncu ile ilgili kordinatlar  dizi olarak tanımlanır ise
         for (int i=0;i< player.length; i++){
@@ -99,15 +121,35 @@ public class Game extends Canvas implements Runnable {
             goomba[i]=new Sprite(sheet,i+1,15);
         }
 
+        for (int i=0;i<flag.length;i++){
+            flag[i] = new Sprite(sheet,i+1,2);
+        }
+
+        for (int i=0;i< particle.length;i++) {
+            particle[i] = new Sprite(sheet,i+1,14);
+        }
+
+        for (int i=0;i<firePlayer.length;i++){
+            firePlayer[i] = new Sprite(sheet,i+8,16);
+        }
+
         // Ekran üzerine bir oyuncu ekler
        // handler.addEntity(new Player(300, 512, 64, 64, true, Id.player, handler));
 
         //levellerin olduğu yere atanır grafikler eklendiğinde sorun kalmayacaktır
         try {
-            image= ImageIO.read(getClass().getResource("/level.png"));
+            levels[0]= ImageIO.read(getClass().getResource("/level1.png"));
+            levels[1]= ImageIO.read(getClass().getResource("/level2.png"));
+            backGround= ImageIO.read(getClass().getResource("/background.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        jump = new Sound("/audio/jump.mp3");
+        goombastomp = new Sound("/audio/goombastomp.mp3");
+        levelcomplete = new Sound("/audio/levelcomplete.mp3");
+        losealife = new Sound("/audio/losealife.mp3");
+        themesong = new Sound("/audio/themesong.mp3");
 
        // handler.createLevel(image);
     }
@@ -164,20 +206,24 @@ public class Game extends Canvas implements Runnable {
 
 
     // Ekran üzerine çizim yapmak için kullanılan metot
-    public void render() {
+    public void render() {//bazı şeyler karışmış olabilir grafikler eklenince tekrar bak!!
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
             createBufferStrategy(3);
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0 , getWidth(), getHeight());
+
+
+        g.setColor(Color.BLACK);//tekrar bak
+        g.fillRect(0, 0 , getWidth(), getHeight());//tekrar bak
         if (!showDeatScreen){
-            g.drawImage(coin.getBufferedImage(), 20,20,75,75,null);
+            g.drawImage(backGround,0,0,getWidth(),getHeight(),null);
+          /*  g.drawImage(coin.getBufferedImage(), 20,20,75,75,null);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier",Font.BOLD,20));
             g.drawString("x"+coins,100,95);
+            *///tekrar bak buraya
 
         }
         if (showDeatScreen) {
@@ -187,6 +233,9 @@ public class Game extends Canvas implements Runnable {
                 g.drawImage(Game.player[0].getBufferedImage(), 500,300,100,100,null);
                 g.drawString("x"+lives,300,400);
             } else {
+                g.setColor(Color.BLACK);
+                g.fillRect(0,0,getWidth(),getHeight());
+
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Courier",Font.BOLD,50));
                 g.drawString("GAME OVER :(",610,400);
@@ -210,6 +259,33 @@ public class Game extends Canvas implements Runnable {
         return HEIGHT*SCALE;
     }
 
+    public static void switchLeve(){
+        Game.level++;
+
+        handler.clearLevel();
+        handler.createLevel(levels[level]);
+
+        Game.themesong.close();
+        Game.levelcomplete.play();
+    }
+
+    public static Rectangle getVisibleArea() {
+        for (Entity e: handler.entity) {
+
+            //bu koda tekrar bak
+            if (e.getId()==Id.player){
+                if (!e.goingDownPipe) {
+                    playerX = e.getX();
+                    playerY = e.getY();
+
+                    return new Rectangle(playerX-(getFrameWidht()/2-5),playerY-(getFrameHeight()/2-5),getFrameWidht()+10,getFrameHeight()+10);
+                }
+
+            }
+        }
+        return new Rectangle(playerX-(getFrameWidht()/2-5),playerY-(getFrameHeight()/2-5),getFrameWidht()+10,getFrameHeight()+10);
+    }
+
     // Oyunun güncellenmesi için kullanılan metot
     public void tick() {
        if(playing) handler.tick();
@@ -226,13 +302,18 @@ public class Game extends Canvas implements Runnable {
                 showDeatScreen = false;
                 deathScreenTime = 0;
                 handler.clearLevel();
-                handler.createLevel(image);
-            }else if (gameOver) {
+                handler.createLevel(levels[level]);
+
+                themesong.play();
+
+            }
+            /*else if (gameOver) {
                 showDeatScreen = false;
                 deathScreenTime = 0;
                 playing = false;
                 gameOver = false;
             }
+            *///bi bak tekrar
 
         }
     }

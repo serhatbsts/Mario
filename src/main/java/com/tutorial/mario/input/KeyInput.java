@@ -24,14 +24,17 @@ public class KeyInput implements KeyListener {
                             if (t.getId()==Id.pipe) {
                                 if (en.getBoundsTop().intersects(t.getBounds())){
                                     if (!en.goingDownPipe) en.goingDownPipe =true;
+                                    if (!en.jumping ) {//breaktan hemen önceye yazılabilir
+                                        en.jumping = true;
+                                        en.gravity = 8.0;//10.0 olabilir
+
+                                        Game.jump.play();
+                                    }
                                 }
 
                             }
                         }
-                        if (!en.jumping) {
-                            en.jumping = true;
-                            en.gravity = 10.0;
-                        }
+
                         break;
                     case KeyEvent.VK_S:
                         for (int j=0;j<Game.handler.tile.size();j++) {

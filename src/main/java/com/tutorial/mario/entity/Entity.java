@@ -7,6 +7,7 @@ import com.tutorial.mario.Game;
 import com.tutorial.mario.Handler;
 import com.tutorial.mario.Id;
 import com.tutorial.mario.states.BossState;
+import com.tutorial.mario.states.KoopaState;
 
 public abstract class Entity {
     // Değişkenlerin tanımlanması
@@ -23,7 +24,9 @@ public abstract class Entity {
     public boolean goingDownPipe = false;
     public boolean attackable = false;
     public Id id;
+
     public BossState bossState;
+    public KoopaState koopaState;
     public Handler handler;
     public int frame=0;
     public int frameDelay=0;
@@ -51,6 +54,23 @@ public abstract class Entity {
     public int getY() {
         return y;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public int getType(){
         return type;
     }
@@ -104,6 +124,8 @@ public abstract class Entity {
             Game.lives--;
             Game.showDeatScreen = true;
             if (Game.lives<=0) Game.gameOver = true;
+
+            Game.losealife.play();
         }
 
     }
