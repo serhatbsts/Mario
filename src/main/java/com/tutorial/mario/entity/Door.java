@@ -19,5 +19,6 @@ public class Door extends Entity{
 
     @Override
     public void tick() {
+        if
     }
 }

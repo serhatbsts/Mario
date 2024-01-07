@@ -87,6 +87,7 @@ public class Player extends Entity {
 
             if (e.getId()==getId().door){
                 if (getBoundsTop().intersects(e.getBounds())){
+                    //kazandınız kodu
 
                 }
             }
