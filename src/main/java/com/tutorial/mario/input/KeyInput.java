@@ -16,35 +16,16 @@ public class KeyInput implements KeyListener {
         // Oyuncu hareketlerini kontrol etme
         for (Entity en : Game.handler.entity) {
             if (en.getId()== Id.player){
-                if (en.goingDownPipe) return;
                 switch (key) {
                     case KeyEvent.VK_W:
-                        for (int j=0;j<Game.handler.tile.size();j++) {
-                            Tile t = Game.handler.tile.get(j);
-                            if (t.getId()==Id.pipe) {
-                                if (en.getBoundsTop().intersects(t.getBounds())){
-                                    if (!en.goingDownPipe) en.goingDownPipe =true;
-                                    if (!en.jumping ) {//breaktan hemen önceye yazılabilir
+                                    if (!en.jumping ) {
                                         en.jumping = true;
-                                        en.gravity = 8.0;//10.0 olabilir
-
-                                        Game.jump.play();
+                                        en.gravity = 10.0;
                                     }
-                                }
-
-                            }
-                        }
-
                         break;
                     case KeyEvent.VK_S:
                         for (int j=0;j<Game.handler.tile.size();j++) {
                             Tile t = Game.handler.tile.get(j);
-                            if (t.getId()==Id.pipe) {
-                                if (en.getBoundsBottom().intersects(t.getBounds())){
-                                    if (!en.goingDownPipe) en.goingDownPipe =true;
-                                }
-
-                            }
                         }
                         break;
                     case KeyEvent.VK_A:

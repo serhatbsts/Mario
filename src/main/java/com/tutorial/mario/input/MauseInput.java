@@ -22,7 +22,6 @@ public class MauseInput implements MouseListener, MouseMotionListener {
             Button button = Game.launcher.buttons[i];
 
             if (x>=button.getX()&&y>=button.getY()&&x<= button.getX()+button.getWidth()&&y<= button.getY()+ button.getHeight()) button.triggerEvent();
-
         }
     }
 

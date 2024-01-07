@@ -5,6 +5,11 @@ import com.tutorial.mario.entity.Entity;
 public class Camera {
     public int x,y;
 
+  /*  public Camera(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }*/
+
     public void tick(Entity player){
         setX(-player.getX()+Game.WIDTH/2);
         setY(-player.getY()+Game.HEIGHT/2);

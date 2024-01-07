@@ -16,13 +16,13 @@ public class Wall extends Tile{
 
     // Grafik çizme metodu
     public void render(Graphics g) {
-      /*
-      Duvarlarla ilgili özellikler burada geçici olarak verilmiştir
-      Grafikler eklenince devre dışı bırakılacaktır.
 
-       g.setColor(Color.BLUE);
-       g.fillRect(x, y, width, height);
-        */
+     // Duvarlarla ilgili özellikler burada geçici olarak verilmiştir
+     // Grafikler eklenince devre dışı bırakılacaktır.
+
+      // g.setColor(Color.BLUE);
+      // g.fillRect(x, y, width, height);
+
 
         g.drawImage(Game.grass.getBufferedImage(), x,y,width,height,null);
     }

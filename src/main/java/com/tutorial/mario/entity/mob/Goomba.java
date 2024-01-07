@@ -32,9 +32,9 @@ public class Goomba extends Entity {
 
     public void render(Graphics g) {
         if (facing==0){
-            g.drawImage(Game.goomba[frame+5].getBufferedImage(), x,y,width,height,null);// frame ekle clasa
+            g.drawImage(Game.goomba[4].getBufferedImage(), x,y,width,height,null);
         }else if (facing==1){
-            g.drawImage(Game.goomba[frame].getBufferedImage(), x,y,width,height,null);// frame ekle clasa
+            g.drawImage(Game.goomba[frame].getBufferedImage(), x,y,width,height,null);
         }
 
     }

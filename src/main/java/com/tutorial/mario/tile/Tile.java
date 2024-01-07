@@ -81,7 +81,6 @@ public abstract class Tile {
         this.height = height;
     }
 
-    // Soyut metotlar
     public abstract void render(Graphics g);
 
     public abstract void tick();

@@ -6,8 +6,7 @@ import java.awt.Rectangle;
 import com.tutorial.mario.Game;
 import com.tutorial.mario.Handler;
 import com.tutorial.mario.Id;
-import com.tutorial.mario.states.BossState;
-import com.tutorial.mario.states.KoopaState;
+
 
 public abstract class Entity {
     // Değişkenlerin tanımlanması
@@ -25,12 +24,13 @@ public abstract class Entity {
     public boolean attackable = false;
     public Id id;
 
-    public BossState bossState;
-    public KoopaState koopaState;
+
+
     public Handler handler;
     public int frame=0;
     public int frameDelay=0;
     public boolean animate=false;
+
 
     // Yapıcı metot
     public Entity(int x, int y, int width, int height, Id id, Handler handler) {
@@ -125,7 +125,7 @@ public abstract class Entity {
             Game.showDeatScreen = true;
             if (Game.lives<=0) Game.gameOver = true;
 
-            Game.losealife.play();
+
         }
 
     }
