@@ -26,15 +26,15 @@ public class Button {
         g.drawRect(getX(),getY(),getWidth(),getHeight());
 
         FontMetrics fm = g.getFontMetrics();
-        int stringX = (getWidth()-fm.stringWidth(getLabel())) / 2 ;
-        int stringY = (fm.getAscent() + (getHeight() - (fm.getAscent() + fm.getDescent())) / 2  );
+        int stringX = (getWidth()-fm.stringWidth(getLabel())) / 5 ;
+        int stringY = (fm.getAscent() + (getHeight() - (fm.getAscent() + fm.getDescent())) / 5 );
         g.drawString(getLabel(),getX()+stringX,getY()+stringY);
 
     }
 
     public void triggerEvent(){
         if (getLabel().toLowerCase().contains("start")) Game.playing = true;
-        else if (getLabel().toLowerCase().contains("exit")) System.exit(0);
+
 
     }
 

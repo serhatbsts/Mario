@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
     private static BufferedImage[] levels;
     private static BufferedImage backGround;
     private static int playerX, playerY;
-    private static int level = 1;//ikinci haritayı çalıştır
+    private static int level = 0;//ikinci haritayı çalıştır
     public static int coins = 0;
     public static int lives = 5;
     public static int deathScreenTime = 0;
@@ -40,10 +40,6 @@ public class Game extends Canvas implements Runnable {
     public static MauseInput mause;
     public static Sprite grass;
     public static Sprite coin;
-    public static Sprite door;
-
-    //  public static Sprite fireBall;
-    // public static Sprite flower;
     public static Sprite[] player;//oyuncu grafiği
 
     public static Sprite[] goomba;
@@ -89,11 +85,8 @@ public class Game extends Canvas implements Runnable {
 
         grass = new Sprite(sheet, 1, 1);//çim ile ilgili kordinatlar
         coin = new Sprite(sheet, 5, 1);
-        door = new Sprite(sheet,3,1);
         player = new Sprite[8];
         goomba = new Sprite[8];
-        flag = new Sprite[3];
-        particle = new Sprite[6];
         levels = new BufferedImage[2];
 
         //oyuncu ile ilgili kordinatlar  dizi olarak tanımlanır ise
@@ -104,12 +97,9 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < goomba.length; i++) {
             goomba[i] = new Sprite(sheet, i + 1, 15);
         }
-        for (int i = 0; i < particle.length; i++) {
-            particle[i] = new Sprite(sheet, i + 1, 14);
-        }
         try {
-            levels[0] = ImageIO.read(getClass().getResource("/level.png"));
-            levels[1] = ImageIO.read(getClass().getResource("/level2.png"));
+           // levels[0] = ImageIO.read(getClass().getResource("/level.png"));
+            levels[0] = ImageIO.read(getClass().getResource("/level2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
