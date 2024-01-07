@@ -34,6 +34,8 @@ public class Handler {
         }
 
 
+
+
     }
 
     // Entity'leri güncelleme metodu

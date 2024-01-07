@@ -180,10 +180,10 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());//tekrar bak
         if (!showDeatScreen) {
             g.drawImage(backGround, 0, 0, getWidth(), getHeight(), null);
-            g.drawImage(coin.getBufferedImage(), 20, 20, 75, 75, null);
+            g.drawImage(Game.coin.getBufferedImage(), 20, 20, 75, 75,null);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 20));
-            g.drawString("x" + coins, 100, 95);
+            g.drawString("x" + Game.coins, 100, 95);
             ///tekrar bak buraya
 
         }
@@ -199,7 +199,7 @@ public class Game extends Canvas implements Runnable {
 
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Courier", Font.BOLD, 50));
-                g.drawString("GAME OVER :(", 610, 400);
+                g.drawString("Total Coin :"+coins, 610, 400);
 
             }
 

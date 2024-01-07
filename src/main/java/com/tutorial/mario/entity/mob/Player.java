@@ -27,7 +27,6 @@ public class Player extends Entity {
     public void render(Graphics g) {
 
 
-
         if (facing==0){
             g.drawImage(Game.player[4+frame].getBufferedImage(), x,y,width,height,null);
         }else if (facing==1){
@@ -85,12 +84,6 @@ public class Player extends Entity {
             Entity e = handler.entity.get(i);
 
 
-            if (e.getId()==getId().door){
-                if (getBoundsTop().intersects(e.getBounds())){
-                    //kazandınız kodu
-
-                }
-            }
 
            if(e.getId()==getId().goomba){
                 if (invincible) e.die();
