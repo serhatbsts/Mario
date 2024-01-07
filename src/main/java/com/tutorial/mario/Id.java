@@ -2,6 +2,6 @@ package com.tutorial.mario;
 
 // Bir oyuncunun oyuncu olduğunu, bir bloğun blok olduğunu doğrulamak için sabitleri kullanma
 public enum Id {
-    player, wall, mushroom, goomba, pipe, coin, door,WinMessage;
+    player, wall, goomba, pipe, coin;
 
 }

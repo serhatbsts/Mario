@@ -67,7 +67,7 @@ public class Player extends Entity {
 
                 if (getBoundsLeft().intersects(t.getBounds())) {
                     setVelX(0);
-                    x = t.getX() + width;
+                    x = t.getX() + width+12;
                 }
 
                 if (getBoundsRight().intersects(t.getBounds())) {
@@ -89,11 +89,7 @@ public class Player extends Entity {
                 if (invincible) e.die();
                     else {
                     if(getBoundsBottom().intersects(e.getBoundsTop())){
-                        if(e.getId()!=Id.mushroom) {
-                            e.die();
-
-                        }
-                        else if (e.attackable){
+                         if (e.attackable){
                             e.hp--;
                             e.falling = true;
                             e.gravity = 3.0;
