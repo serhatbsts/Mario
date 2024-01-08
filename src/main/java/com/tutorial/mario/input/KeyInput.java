@@ -20,7 +20,7 @@ public class KeyInput implements KeyListener {
                     case KeyEvent.VK_W:
                                     if (!en.jumping ) {
                                         en.jumping = true;
-                                        en.gravity = 10.0;
+                                        en.gravity = 11.0;
                                     }
                         break;
                     case KeyEvent.VK_S:

@@ -98,7 +98,6 @@ public class Game extends Canvas implements Runnable {
             goomba[i] = new Sprite(sheet, i + 1, 15);
         }
         try {
-           // levels[0] = ImageIO.read(getClass().getResource("/level.png"));
             levels[0] = ImageIO.read(getClass().getResource("/level2.png"));
         } catch (IOException e) {
             e.printStackTrace();

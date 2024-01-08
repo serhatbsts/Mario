@@ -89,17 +89,7 @@ public class Player extends Entity {
                 if (invincible) e.die();
                     else {
                     if(getBoundsBottom().intersects(e.getBoundsTop())){
-                         if (e.attackable){
-                            e.hp--;
-                            e.falling = true;
-                            e.gravity = 3.0;
-                            e.attackable = false;
-                            e.phaseTime = 0;
-
-                            jumping = true;
-                            falling = false;
-                            gravity = 3.5;
-                        }
+                      e.die();
                     } else if (getBounds().intersects(e.getBounds())){
                             die();
                     }
