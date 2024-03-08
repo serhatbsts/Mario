@@ -83,32 +83,32 @@ git clone https://github.com/serhatbsts/Mario.git
     <tbody>
     <tr>
         <th>Name</th>
+        <td width="100" align="center">SERHAT BEŞTAŞ</td>
         <td width="100" align="center">BURAK BAŞLIK</td>
         <td width="100" align="center">BERTAN SEZGİN</td>
-        <td width="100" align="center">SERHAT BEŞTAŞ</td>
     </tr>
     <tr>
         <th>Linkedin</th>
+	     <td width="150" align="center">
+           https://www.linkedin.com/in/serhatbestas/<br>
+        </td>
         <td width="150" align="center">
             https://www.linkedin.com/in/burakbaslik448/<br>
         </td>
         <td width="150" align="center">
            https://www.linkedin.com/in/bertan-sezgin/<br>
         </td>
-        <td width="150" align="center">
-           https://www.linkedin.com/in/serhatbestas/<br>
-        </td>
     </tr>
     <tr>
        <th>GitHub</th>
+         <td width="150" align="center">
+         https://github.com/serhatbsts <br>
+        </td>
         <td width="150" align="center">
             https://github.com/burakbaslik <br>
         </td>
         <td width="150" align="center">
            https://github.com/<br>
-        </td>
-        <td width="150" align="center">
-         https://github.com/serhatbsts <br>
         </td>
      </tr>
     </tbody>
